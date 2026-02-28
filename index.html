@@ -1,0 +1,785 @@
+ <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025一建建筑实务 - 建筑物分类与构成</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Microsoft YaHei", "SimHei", sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            padding: 60px;
+            position: relative;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 封面样式 */
+        .cover {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        
+        .cover h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(243, 156, 18, 0.3);
+        }
+        
+        .cover .subtitle {
+            font-size: 2rem;
+            color: #ecf0f1;
+            margin-bottom: 40px;
+        }
+        
+        .cover .teacher {
+            font-size: 1.5rem;
+            color: #f39c12;
+            margin-top: 60px;
+        }
+        
+        /* 内容页样式 */
+        .content-slide h2 {
+            font-size: 2.5rem;
+            color: #f39c12;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #e74c3c;
+            display: inline-block;
+        }
+        
+        .content-slide h3 {
+            font-size: 1.8rem;
+            color: #3498db;
+            margin: 30px 0 20px 0;
+        }
+        
+        .content-slide p, .content-slide li {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #ecf0f1;
+            margin: 15px 0;
+        }
+        
+        .content-slide ul {
+            margin-left: 40px;
+        }
+        
+        .content-slide li {
+            margin: 10px 0;
+        }
+        
+        /* 表格样式 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 1.2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .data-table th {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .data-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .data-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        /* 重点标记 */
+        .highlight {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        
+        .key-point {
+            background: rgba(231, 76, 60, 0.2);
+            border-left: 5px solid #e74c3c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        /* 真题样式 */
+        .exam-question {
+            background: rgba(52, 152, 219, 0.1);
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .exam-question .year {
+            color: #f39c12;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .exam-question .answer {
+            color: #2ecc71;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 1.2rem;
+        }
+        
+        /* 导航按钮 */
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+        
+        .nav-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            font-size: 1.2rem;
+            color: #f39c12;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+        
+        /* 图表容器 */
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .chart-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            min-width: 200px;
+            margin: 10px;
+            border: 2px solid rgba(243, 156, 18, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .chart-box:hover {
+            transform: translateY(-5px);
+            border-color: #f39c12;
+        }
+        
+        .chart-box .number {
+            font-size: 3rem;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .chart-box .label {
+            font-size: 1.2rem;
+            color: #ecf0f1;
+            margin-top: 10px;
+        }
+        
+        /* 分类标签 */
+        .category-tags {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .tag.orange {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
+        }
+        
+        .tag.red {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+        }
+        
+        /* 记忆口诀 */
+        .memory-trick {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(39, 174, 96, 0.2));
+            border: 2px solid #2ecc71;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .memory-trick .title {
+            color: #2ecc71;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .memory-trick .content {
+            font-size: 2rem;
+            color: #f39c12;
+            font-weight: bold;
+            letter-spacing: 10px;
+        }
+        
+        /* 两栏布局 */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        
+        .column-box {
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .column-box h4 {
+            color: #f39c12;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        /* 高度示意图 */
+        .height-diagram {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 50px;
+            margin: 40px 0;
+            height: 300px;
+        }
+        
+        .height-bar {
+            width: 120px;
+            background: linear-gradient(to top, #e74c3c, #f39c12);
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 20px;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+        }
+        
+        .height-bar.low { height: 30%; background: linear-gradient(to top, #27ae60, #2ecc71); }
+        .height-bar.high { height: 60%; background: linear-gradient(to top, #f39c12, #e67e22); }
+        .height-bar.super { height: 100%; background: linear-gradient(to top, #e74c3c, #c0392b); }
+        
+        .height-label {
+            position: absolute;
+            top: -40px;
+            font-size: 1.2rem;
+            color: #f39c12;
+            white-space: nowrap;
+        }
+        
+        /* 页脚 */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: calc(100% - 120px);
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 第1页：封面 -->
+    <div class="slide cover active">
+        <h1>2025一建建筑实务精讲班</h1>
+        <div class="subtitle">第1篇 建筑工程技术<br>第1章 建筑工程设计要求<br>1.1.1 建筑物分类与构成</div>
+        <div class="teacher">授课老师：金月</div>
+        <div style="margin-top: 80px; font-size: 1.2rem; color: #7f8c8d;">
+            专业 · 精准 · 高效
+        </div>
+    </div>
+
+    <!-- 第2页：考情分析 -->
+    <div class="slide content-slide">
+        <h2>📊 历年考情分析</h2>
+        <div class="chart-container">
+            <div class="chart-box">
+                <div class="number">54</div>
+                <div class="label">2024年<br>第1篇分值</div>
+            </div>
+            <div class="chart-box">
+                <div class="number">51</div>
+                <div class="label">2023年<br>第1篇分值</div>
+            </div>
+            <div class="chart-box">
+                <div class="number">55</div>
+                <div class="label">2022年<br>第1篇分值</div>
+            </div>
+            <div class="chart-box">
+                <div class="number">50</div>
+                <div class="label">2021年<br>第1篇分值</div>
+            </div>
+        </div>
+        <div class="key-point">
+            <strong>重点提示：</strong>第1篇建筑工程技术占总分约50-55分，是考试的重中之重！其中建筑物分类与构成是每年必考的基础知识点。
+        </div>
+        <table class="data-table">
+            <tr>
+                <th>年份</th>
+                <th>第1篇</th>
+                <th>第2篇</th>
+                <th>第3篇</th>
+                <th>总分</th>
+            </tr>
+            <tr>
+                <td>2024年</td>
+                <td class="highlight">54分</td>
+                <td>8分</td>
+                <td>98分</td>
+                <td>160分</td>
+            </tr>
+            <tr>
+                <td>2023年</td>
+                <td class="highlight">51分</td>
+                <td>15分</td>
+                <td>94分</td>
+                <td>160分</td>
+            </tr>
+            <tr>
+                <td>2022年</td>
+                <td class="highlight">55分</td>
+                <td>24分</td>
+                <td>81分</td>
+                <td>160分</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 第3页：目录 -->
+    <div class="slide content-slide">
+        <h2>📑 本节内容框架</h2>
+        <div class="category-tags" style="justify-content: center; margin-top: 50px;">
+            <div class="tag">1. 建筑物的分类</div>
+            <div class="tag orange">2. 建筑物的构成</div>
+        </div>
+        
+        <h3 style="margin-top: 50px;">一、建筑物的分类方法</h3>
+        <ul style="font-size: 1.4rem;">
+            <li><span class="highlight">按用途分类：</span>民用建筑、工业建筑、农业建筑</li>
+            <li><span class="highlight">按层数或高度分类：</span>低层/多层、高层、超高层</li>
+            <li><span class="highlight">按防火规范分类：</span>一类高层、二类高层、单多层</li>
+        </ul>
+        
+        <div class="memory-trick">
+            <div class="title">💡 记忆口诀</div>
+            <div class="content">农 民 工</div>
+            <div style="margin-top: 10px; color: #7f8c8d;">农业建筑、民用建筑、工业建筑</div>
+        </div>
+    </div>
+
+    <!-- 第4页：按用途分类 -->
+    <div class="slide content-slide">
+        <h2>🏢 按建筑物的用途分类</h2>
+        
+        <div class="two-column">
+            <div class="column-box">
+                <h4>🏠 居住建筑</h4>
+                <ul>
+                    <li>住宅建筑</li>
+                    <li>宿舍</li>
+                    <li>民政建筑</li>
+                </ul>
+                <div style="margin-top: 20px; padding: 15px; background: rgba(243, 156, 18, 0.1); border-radius: 10px; text-align: center;">
+                    <strong style="color: #f39c12;">特点：</strong>供人们生活起居使用
+                </div>
+            </div>
+            
+            <div class="column-box">
+                <h4>🏛️ 公共建筑</h4>
+                <ul>
+                    <li>教育建筑（学校、幼儿园）</li>
+                    <li>办公科研建筑</li>
+                    <li>商业服务建筑</li>
+                    <li>公众活动建筑</li>
+                    <li>交通建筑</li>
+                    <li><span class="highlight">医疗建筑</span></li>
+                    <li>社会民生服务</li>
+                    <li>综合类建筑</li>
+                </ul>
+                <div style="margin-top: 20px; padding: 15px; background: rgba(52, 152, 219, 0.1); border-radius: 10px; text-align: center;">
+                    <strong style="color: #3498db;">特点：</strong>供人们进行各类公共活动
+                </div>
+            </div>
+        </div>
+        
+        <div class="key-point" style="margin-top: 30px;">
+            <strong>考试重点：</strong>区分居住建筑与公共建筑是历年真题高频考点，特别注意"宿舍"属于居住建筑，"医疗建筑"属于公共建筑！
+        </div>
+    </div>
+
+    <!-- 第5页：真题演练1 -->
+    <div class="slide content-slide">
+        <h2>✍️ 历年真题演练</h2>
+        
+        <div class="exam-question">
+            <div class="year">【2020年12月真题】</div>
+            <div style="font-size: 1.3rem; margin-bottom: 15px;">
+                <strong>题目：</strong>按使用功能划分，下列属于居住建筑的是（ ）
+            </div>
+            <div style="margin-left: 20px; line-height: 2;">
+                A. 办公楼<br>
+                B. 宾馆<br>
+                C. 医院<br>
+                D. 宿舍楼
+            </div>
+            <div class="answer">
+                【答案】D<br>
+                【解析】宿舍楼属于居住建筑；办公楼、宾馆、医院均属于公共建筑。
+            </div>
+        </div>
+        
+        <div class="exam-question">
+            <div class="year">【2023年真题】</div>
+            <div style="font-size: 1.3rem; margin-bottom: 15px;">
+                <strong>题目：</strong>下面属于公共建筑的是（ ）
+            </div>
+            <div style="margin-left: 20px; line-height: 2;">
+                A. 仓储建筑<br>
+                B. 农机修理站<br>
+                C. 医疗建筑<br>
+                D. 宿舍建筑
+            </div>
+            <div class="answer">
+                【答案】C<br>
+                【解析】医疗建筑属于公共建筑；仓储建筑、农机修理站属于工业建筑；宿舍建筑属于居住建筑。
+            </div>
+        </div>
+    </div>
+
+    <!-- 第6页：按高度分类（民用建筑设计统一标准） -->
+    <div class="slide content-slide">
+        <h2>📏 按层数或高度分类（GB50352-2019）</h2>
+        
+        <h3>《民用建筑设计统一标准》分类标准</h3>
+        
+        <table class="data-table">
+            <tr>
+                <th>建筑类型</th>
+                <th>低层/多层</th>
+                <th>高层</th>
+                <th>超高层</th>
+            </tr>
+            <tr>
+                <td><strong>住宅建筑</strong></td>
+                <td>≤27m</td>
+                <td class="highlight">>27m</td>
+                <td class="highlight">>100m</td>
+            </tr>
+            <tr>
+                <td><strong>公共建筑</strong></td>
+                <td>≤24m</td>
+                <td class="highlight">>24m</td>
+                <td class="highlight">>100m</td>
+            </tr>
+        </table>
+        
+        <div class="height-diagram">
+            <div class="height-bar low">
+                <div class="height-label">≤27m/≤24m</div>
+                <div style="margin-bottom: 10px;">低层/多层</div>
+            </div>
+            <div class="height-bar high">
+                <div class="height-label">>27m/>24m</div>
+                <div style="margin-bottom: 10px;">高层</div>
+            </div>
+            <div class="height-bar super">
+                <div class="height-label">>100m</div>
+                <div style="margin-bottom: 10px;">超高层</div>
+            </div>
+        </div>
+        
+        <div class="key-point">
+            <strong>核心原则：</strong>住宅按27m划分，公共建筑按24m划分，超高层统一按100m划分！
+        </div>
+    </div>
+
+    <!-- 第7页：真题演练2 -->
+    <div class="slide content-slide">
+        <h2>✍️ 历年真题演练</h2>
+        
+        <div class="exam-question">
+            <div class="year">【2022年补考真题】</div>
+            <div style="font-size: 1.3rem; margin-bottom: 15px;">
+                <strong>题目：</strong>下列属于高层建筑的有（ ）
+            </div>
+            <div style="margin-left: 20px; line-height: 2;">
+                A. 21m高住宅<br>
+                B. 21m高办公楼<br>
+                C. 25m高办公楼<br>
+                D. 25m高住宅
+            </div>
+            <div class="answer">
+                【答案】C<br>
+                【解析】<br>
+                • 住宅：≤27m为多层，>27m为高层<br>
+                • 公共建筑：≤24m为多层，>24m为高层<br>
+                • A选项21m住宅（≤27m）→多层<br>
+                • B选项21m办公楼（≤24m）→多层<br>
+                • C选项25m办公楼（>24m）→高层 ✓<br>
+                • D选项25m住宅（≤27m）→多层
+            </div>
+        </div>
+        
+        <div class="exam-question">
+            <div class="year">【2018年真题】</div>
+            <div style="font-size: 1.3rem; margin-bottom: 15px;">
+                <strong>题目：</strong>按照民用建筑分类标准，属于超高层建筑的是（ ）
+            </div>
+            <div style="margin-left: 20px; line-height: 2;">
+                A. 高度50m的建筑<br>
+                B. 高度70m的建筑<br>
+                C. 高度90m的建筑<br>
+                D. 高度110m的建筑
+            </div>
+            <div class="answer">
+                【答案】D<br>
+                【解析】超高层建筑的统一标准是建筑高度>100m，与建筑类型无关。
+            </div>
+        </div>
+    </div>
+
+    <!-- 第8页：防火规范分类 -->
+    <div class="slide content-slide">
+        <h2>🔥 按《建筑设计防火规范》分类</h2>
+        
+        <h3>住宅建筑分类（按高度+功能）</h3>
+        
+        <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 30px; margin: 20px 0;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <div style="text-align: center; flex: 1;">
+                    <div style="font-size: 1.2rem; color: #7f8c8d;">单、多层</div>
+                    <div style="font-size: 2rem; color: #2ecc71; font-weight: bold;">H≤27m</div>
+                </div>
+                <div style="font-size: 2rem; color: #f39c12;">→</div>
+                <div style="text-align: center; flex: 1;">
+                    <div style="font-size: 1.2rem; color: #7f8c8d;">二类高层</div>
+                    <div style="font-size: 2rem; color: #f39c12; font-weight: bold;">27m&lt;H≤54m</div>
+                </div>
+                <div style="font-size: 2rem; color: #f39c12;">→</div>
+                <div style="text-align: center; flex: 1;">
+                    <div style="font-size: 1.2rem; color: #7f8c8d;">一类高层</div>
+                    <div style="font-size: 2rem; color: #e74c3c; font-weight: bold;">H>54m</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3>公共建筑分类（重点记忆）</h3>
+        <table class="data-table" style="font-size: 1rem;">
+            <tr>
+                <th>类别</th>
+                <th>判定标准</th>
+            </tr>
+            <tr>
+                <td class="highlight">一类高层</td>
+                <td style="text-align: left;">
+                    1. H>50m<br>
+                    2. 建筑高度24m以上部分，任一楼层建筑面积>1000m²的商店、展览、电信、邮政、财贸金融建筑和其他多种功能组合的建筑<br>
+                    3. <span style="color: #e74c3c; font-weight: bold;">医疗建筑、重要公共建筑、独立建造的老年人照料设施</span>【2025新增】<br>
+                    4. 省级及以上的广播电视和防灾指挥调度、网局级和省级电力调度<br>
+                    5. 藏书超过100万册的图书馆
+                </td>
+            </tr>
+            <tr>
+                <td>二类高层</td>
+                <td style="text-align: left;">除一类外的高层公共建筑</td>
+            </tr>
+            <tr>
+                <td>单、多层</td>
+                <td style="text-align: left;">
+                    1. H>24m的单层公共建筑<br>
+                    2. H≤24m的其他公共建筑
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 第9页：重点总结 -->
+    <div class="slide content-slide">
+        <h2>🎯 核心考点总结</h2>
+        
+        <div class="two-column">
+            <div class="column-box">
+                <h4>📐 高度分界点</h4>
+                <ul style="font-size: 1.1rem;">
+                    <li><span class="highlight">住宅：</span>27m、54m、100m</li>
+                    <li><span class="highlight">公共建筑：</span>24m、50m、100m</li>
+                    <li><span class="highlight">超高层：</span>统一>100m</li>
+                </ul>
+            </div>
+            
+            <div class="column-box">
+                <h4>🏗️ 特殊建筑</h4>
+                <ul style="font-size: 1.1rem;">
+                    <li><span class="highlight">医疗建筑：</span>公共建筑+一类高层</li>
+                    <li><span class="highlight">宿舍：</span>居住建筑</li>
+                    <li><span class="highlight">老年人照料设施：</span>2025新增重点</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="key-point" style="margin-top: 30px;">
+            <strong>2025年教材变化提示：</strong><br>
+            独立建造的老年人照料设施明确列为一类高层公共建筑，这是今年考试的重点关注内容！
+        </div>
+        
+        <div class="memory-trick">
+            <div class="title">🧠 快速记忆法</div>
+            <div style="font-size: 1.3rem; margin-top: 15px;">
+                <span style="color: #e74c3c; font-weight: bold;">住宅：</span>27-54-100（爱妻-武士-满分）<br>
+                <span style="color: #3498db; font-weight: bold;">公建：</span>24-50-100（儿食-武士-满分）<br>
+                <span style="color: #2ecc71; font-weight: bold;">一类：</span>医疗、老人、>50m、>1000m²、省级广电
+            </div>
+        </div>
+    </div>
+
+    <!-- 第10页：结束页 -->
+    <div class="slide cover">
+        <h1 style="font-size: 3rem;">谢谢观看</h1>
+        <div class="subtitle" style="margin-top: 30px;">
+            下节预告：建筑设计程序与要求<br>
+            <span style="font-size: 1.2rem; color: #7f8c8d;">请持续关注金月老师精讲班课程</span>
+        </div>
+        <div style="margin-top: 80px; font-size: 1.5rem; color: #f39c12;">
+            2025，我们一建必过！💪
+        </div>
+    </div>
+
+    <!-- 导航 -->
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="prevSlide()" id="prevBtn">上一页</button>
+        <button class="nav-btn" onclick="nextSlide()" id="nextBtn">下一页</button>
+    </div>
+    
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[n].classList.add('active');
+            document.getElementById('currentSlide').textContent = n + 1;
+            
+            // 更新按钮状态
+            document.getElementById('prevBtn').disabled = n === 0;
+            document.getElementById('nextBtn').disabled = n === totalSlides - 1;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+        
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+        
+        // 初始化
+        showSlide(0);
+    </script>
+</body>
+</html>
